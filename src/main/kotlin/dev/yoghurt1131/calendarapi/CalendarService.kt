@@ -19,7 +19,7 @@ interface CalendarService {
 
 @Profile("local", "dev")
 @Service
-class GoogleCalendarService(val calendar: Calendar) : CalendarService {
+class GoogleCalendarService(private val calendar: Calendar) : CalendarService {
 
     override fun getSchedule(days: Int): Schedule {
         val events: Events = calendar.events().list("primary")
