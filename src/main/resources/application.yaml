@@ -1,5 +1,6 @@
 google:
   calendar:
+    calendarId: primary
     clientId: replaceit
     authUri: https://accounts.google.com/o/oauth2/auth
     tokenUri: https://oauth2.googleapis.com/token

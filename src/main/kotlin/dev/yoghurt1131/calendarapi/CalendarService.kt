@@ -4,12 +4,12 @@ import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.Events
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 interface CalendarService {
@@ -19,12 +19,16 @@ interface CalendarService {
 
 @Profile("local", "dev")
 @Service
-class GoogleCalendarService(private val calendar: Calendar) : CalendarService {
+class GoogleCalendarService(
+        private val calendar: Calendar,
+    private val properties: CalendarProperties
+    ) : CalendarService {
 
     override fun getSchedule(days: Int): Schedule {
-        val events: Events = calendar.events().list("primary")
+        val events: Events = calendar.events().list(properties.calendarId)
+                .setTimeMin(DateTime(LocalDate.now().atStartOfDay().toInstant(ZoneOffset.ofHours(9)).toEpochMilli()))
+                .setTimeMax(DateTime(LocalDate.now().atTime(23, 59, 59).toInstant(ZoneOffset.ofHours(9)).toEpochMilli()))
                 .setMaxResults(10)
-                .setTimeMin(DateTime(System.currentTimeMillis()))
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
                 .execute()
@@ -72,6 +76,5 @@ fun Event.getUser(): User {
     val name: String = (creator.displayName?: creator.email?: "NaN")
             .split(" ", "@")
             .first()
-            .take(6)
     return User(name)
     }
