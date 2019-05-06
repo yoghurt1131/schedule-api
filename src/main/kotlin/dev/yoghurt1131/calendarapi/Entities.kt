@@ -2,7 +2,7 @@ package dev.yoghurt1131.calendarapi
 
 import java.time.LocalDateTime
 
-data class Event(
+data class CalendarEvent(
         var name: String,
         var from: LocalDateTime,
         var to: LocalDateTime,
@@ -12,7 +12,7 @@ data class Event(
 )
 
 data class Schedule(
-        var events: List<Event>
+        var events: List<CalendarEvent>
 )
 
 data class User(

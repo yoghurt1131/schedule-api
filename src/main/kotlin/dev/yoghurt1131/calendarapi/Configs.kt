@@ -11,12 +11,14 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.context.annotation.RequestScope
 import java.util.*
 
 
-// @Configuration
+@Configuration
 class CalendarConfig(private val properties: CalendarProperties) {
 
     private val APPLICATION_NAME = "Google Calendar API Java Quickstart"
@@ -24,6 +26,8 @@ class CalendarConfig(private val properties: CalendarProperties) {
     private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
     private val TOKENS_DIRECTORY_PATH = "tokens"
     val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
+
+    val logger = LoggerFactory.getLogger(javaClass)
 
     @Bean
     fun details(): Details{
@@ -37,7 +41,9 @@ class CalendarConfig(private val properties: CalendarProperties) {
     }
 
     @Bean
+    @RequestScope
     fun credential(details: Details): Credential {
+        logger.info("initialize bean of Credential")
         var googleClientSecrets: GoogleClientSecrets = GoogleClientSecrets();
         googleClientSecrets.installed = details
         val flow = GoogleAuthorizationCodeFlow.Builder(
@@ -50,7 +56,9 @@ class CalendarConfig(private val properties: CalendarProperties) {
     }
 
     @Bean
+    @RequestScope
     fun calendr(credential: Credential): Calendar {
+        logger.info("initialize bean of Calendar")
         // Build a new authorized API client service.
         val HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
         val service = Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
