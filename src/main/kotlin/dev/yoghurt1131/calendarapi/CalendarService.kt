@@ -1,18 +1,17 @@
 package dev.yoghurt1131.calendarapi
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.Month
-import java.util.*
 
 interface CalendarService {
 
     fun getSchedule(days: Int): Schedule
 }
 
-@Service("googleCalendarService")
+@Profile("dev")
+@Service
 class GoogleCalendarService : CalendarService {
 
     override fun getSchedule(days: Int): Schedule {
@@ -20,7 +19,8 @@ class GoogleCalendarService : CalendarService {
     }
 }
 
-@Service("localCalendarService")
+@Profile("default", "local")
+@Service
 class LocalCalendarService : CalendarService {
 
     override fun getSchedule(days: Int): Schedule {
