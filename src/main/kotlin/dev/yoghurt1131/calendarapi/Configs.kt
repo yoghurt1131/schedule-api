@@ -14,6 +14,7 @@ import com.google.api.services.calendar.CalendarScopes
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.web.context.annotation.RequestScope
 import java.util.*
 
@@ -49,11 +50,11 @@ class CalendarConfig(private val properties: CalendarProperties) {
         val flow = GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, googleClientSecrets, SCOPES)
                 .setDataStoreFactory(FileDataStoreFactory(java.io.File(TOKENS_DIRECTORY_PATH)))
-                .setAccessType("offline")
                 .build()
-        val receiver = LocalServerReceiver.Builder().setPort(8888).build()
-        return AuthorizationCodeInstalledApp(flow, receiver).authorize("user")
+        logger.info("LocalServerReceiver Host:${properties.localserver}")
+        return AuthorizationCodeInstalledApp(flow, LocalServerReceiver()).authorize("user")
     }
+
 
     @Bean
     @RequestScope

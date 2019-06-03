@@ -12,5 +12,7 @@ class CalendarProperties {
     lateinit var tokenUri: String
     lateinit var clientSecret: String
     lateinit var redirectUris: List<String>
+    lateinit var localserver: String
 
 }
+
