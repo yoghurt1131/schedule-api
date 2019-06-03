@@ -7,9 +7,15 @@ import org.springframework.web.bind.annotation.RestController
 class CalendarController(private val calendarService: CalendarService) {
 
 
-    @GetMapping("/schedule/today")
+    @GetMapping("/schedule/daily")
     fun todaySchedule(): Schedule {
         val schedule = calendarService.getSchedule(1)
+        return schedule
+    }
+
+    @GetMapping("/schedule/weekly")
+    fun weeklySchedule(): Schedule {
+        val schedule = calendarService.getSchedule(7)
         return schedule
     }
 }

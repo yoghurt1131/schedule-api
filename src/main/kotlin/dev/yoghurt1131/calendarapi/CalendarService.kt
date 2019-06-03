@@ -27,7 +27,10 @@ class GoogleCalendarService(
     override fun getSchedule(days: Int): Schedule {
         val events: Events = calendar.events().list(properties.calendarId)
                 .setTimeMin(DateTime(LocalDate.now().atStartOfDay().toInstant(ZoneOffset.ofHours(9)).toEpochMilli()))
-                .setTimeMax(DateTime(LocalDate.now().atTime(23, 59, 59).toInstant(ZoneOffset.ofHours(9)).toEpochMilli()))
+                .setTimeMax(DateTime(LocalDate.now().plusDays(days - 1L).atTime(23, 59, 59).toInstant(ZoneOffset
+                        .ofHours
+                (9))
+                        .toEpochMilli()))
                 .setMaxResults(10)
                 .setOrderBy("startTime")
                 .setSingleEvents(true)
