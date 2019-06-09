@@ -2,28 +2,37 @@ plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'org.jetbrains.kotlin.jvm' version '1.2.71'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.2.71'
+	id 'com.palantir.docker' version '0.22.1'
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
+
 
 group = 'dev.yoghurt1131'
 version = '0.1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
+	gradlePluginPortal()
 	mavenCentral()
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 	implementation 'com.google.api-client:google-api-client:1.23.0'
-	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+	implementation 'com.google.oauth-client:google-oauth-client:1.23.0'
 	implementation 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 }
 
 compileKotlin {
@@ -39,3 +48,4 @@ compileTestKotlin {
 		jvmTarget = '1.8'
 	}
 }
+
