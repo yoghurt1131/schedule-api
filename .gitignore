@@ -31,5 +31,4 @@ application-local.yaml
 .vscode/
 
 ### Google API ###
-credentials.json
-tokens/
+client_secret.json
