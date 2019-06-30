@@ -49,3 +49,8 @@ compileTestKotlin {
 	}
 }
 
+docker {
+	name "dev.yoghurt1131/calendar-api:$version"
+	buildArgs ([JAR_FILE: "calendar-api-${version}.jar"])
+	files 'build/libs'
+}
