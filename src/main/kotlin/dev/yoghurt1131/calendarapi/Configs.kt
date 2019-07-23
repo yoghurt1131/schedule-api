@@ -81,6 +81,7 @@ class CalendarConfig(private val properties: CalendarProperties) {
 class CalendarWebMvcConfigure(private val googleClientSecrets: GoogleClientSecrets, private val googleCredential: GoogleCredential) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(GoogleOAuth2Interceptor(googleClientSecrets, googleCredential))
+                .addPathPatterns("/schedule")
     }
 }
 

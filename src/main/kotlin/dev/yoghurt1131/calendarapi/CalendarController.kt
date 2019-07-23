@@ -41,5 +41,6 @@ class CalendarController(
         val response = request.execute()
         googleCredential.setAccessToken(response.accessToken)
         return "This is endpoint for google oauth2 callback."
+
     }
 }
