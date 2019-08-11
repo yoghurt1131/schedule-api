@@ -15,3 +15,8 @@ class CalendarProperties {
 
 }
 
+@ConfigurationProperties("header.check")
+class HeaderCheckProperties {
+    lateinit var content: String
+}
+

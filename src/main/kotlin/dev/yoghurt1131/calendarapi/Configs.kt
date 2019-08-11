@@ -8,9 +8,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.Details
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.client.util.Value
 import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import dev.yoghurt1131.personallib.auth.HeaderAuthInterceptor
 import org.apache.tomcat.util.http.parser.Authorization
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -78,8 +80,15 @@ class CalendarConfig(private val properties: CalendarProperties) {
 }
 
 @Configuration
-class CalendarWebMvcConfigure(private val googleClientSecrets: GoogleClientSecrets, private val googleCredential: GoogleCredential) : WebMvcConfigurer {
+class CalendarWebMvcConfigure(
+        private val googleClientSecrets: GoogleClientSecrets,
+        private val googleCredential: GoogleCredential,
+        private val headerCheckProperties: HeaderCheckProperties
+) : WebMvcConfigurer {
+
     override fun addInterceptors(registry: InterceptorRegistry) {
+        val content = System.getenv("HEADER_CONTENT")
+        registry.addInterceptor(HeaderAuthInterceptor(headerCheckProperties.content))
         registry.addInterceptor(GoogleOAuth2Interceptor(googleClientSecrets, googleCredential))
                 .addPathPatterns("/schedule")
     }
