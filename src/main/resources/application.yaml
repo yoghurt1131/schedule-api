@@ -7,4 +7,7 @@ google:
     redirectUris: http://localhost:8080/callback
     calendarId: replaceit
 
+header:
+  check:
+    content: default
 
