@@ -62,7 +62,7 @@ class CalendarConfig(private val properties: CalendarProperties) {
 
 
     @Bean
-    fun calendr(googleCredential: GoogleCredential): Calendar {
+    fun calender(googleCredential: GoogleCredential): Calendar {
         logger.info("initialize bean of Calendar")
         // Build a new authorized API client service.
         val service = Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, googleCredential).build()

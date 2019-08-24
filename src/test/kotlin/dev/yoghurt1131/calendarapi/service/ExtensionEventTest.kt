@@ -6,64 +6,55 @@ import com.google.api.services.calendar.model.EventDateTime
 import getFrom
 import getTo
 import getUser
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 import isAllDay
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import java.time.LocalDateTime
 
 
-class ExtensionEventTest {
+class ExtensionEventTest : StringSpec (){
+    init {
+        "Event.isAllDay() shourd return true" {
+            dateEvent.isAllDay() shouldBe true
+        }
 
-    @Test
-    fun `When Event is dateOnly then return true`() {
-        assertTrue(dateEvent.isAllDay())
-    }
+        "Event.isAllDay() should return false" {
+            dateTimeEvent.isAllDay() shouldBe false
+        }
 
-    @Test
-    fun `When Event is not dateOnly then return false`() {
-        assertFalse(dateTimeEvent.isAllDay())
-    }
+        "Event.getFrom() should return '2019-04-01T00:00:00'" {
+            dateEvent.getFrom() shouldBe LocalDateTime.of(2019, 4, 1, 0, 0, 0)
+        }
 
-    @Test
-    fun `Event can get 'from date' as expected`() {
-        assertThat(dateEvent.getFrom()).isEqualTo("2019-04-01T00:00:00")
-    }
+        "Event.getFrom() should return '2019-04-01T10:00:00'" {
+            dateTimeEvent.getFrom() shouldBe LocalDateTime.of(2019, 4, 1, 10, 0, 0)
+        }
 
-    @Test
-    fun `Event can get 'from date time' as expected`() {
-        assertThat(dateTimeEvent.getFrom()).isEqualTo("2019-04-01T10:00:00")
-    }
+        "Event.getTo() should return '2019-04-03T23:59:59'" {
+            dateEvent.getTo() shouldBe LocalDateTime.of(2019, 4, 3, 23, 59, 59)
+        }
 
-    @Test
-    fun `Event can get 'to date' as expected`() {
-        assertThat(dateEvent.getTo()).isEqualTo("2019-04-03T23:59:00")
-    }
+        "Event.getTo() should return '2019-04-01T17:00:0'" {
+            dateTimeEvent.getTo() shouldBe LocalDateTime.of(2019, 4, 1, 17, 0, 0)
+        }
 
-    @Test
-    fun `Event can get 'to date time' as expected`() {
-        assertThat(dateTimeEvent.getTo()).isEqualTo("2019-04-01T17:00:00")
-    }
+        "Event.getUser().name should return 'taro'" {
+            // setup
+            val event = Event().setCreator(Event.Creator().setDisplayName("taro").setEmail("mail@gmailcom"))
+            event.getUser().name shouldBe "taro"
+        }
 
-    @Test
-    fun `event returns displayName if exists`() {
-        // setup
-        val event = Event().setCreator(Event.Creator().setDisplayName("taro").setEmail("mail@gmailcom"))
-        assertThat(event.getUser().name).isEqualTo("taro")
-    }
+        "Event.getUser().name should return 'mail'" {
+            // setup
+            val event = Event().setCreator(Event.Creator().setEmail("mail@gmailcom"))
+            event.getUser().name shouldBe "mail"
+        }
 
-    @Test
-    fun `event returns email if displayName does not exists`() {
-        // setup
-        val event = Event().setCreator(Event.Creator().setEmail("mail@gmailcom"))
-        assertThat(event.getUser().name).isEqualTo("mail")
-    }
-
-    @Test
-    fun `event returns 'NaN' if neither displayName nor email exists`() {
-        // setup
-        val event = Event().setCreator(Event.Creator())
-        assertThat(event.getUser().name).isEqualTo("NaN")
+        "Event.getUser().name should return 'NaN" {
+            // setup
+            val event = Event().setCreator(Event.Creator())
+            event.getUser().name shouldBe "NaN"
+        }
     }
 
     // setup date event

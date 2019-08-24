@@ -18,7 +18,7 @@ fun Event.getFrom(): LocalDateTime = if(isAllDay()) {
 }
 
 fun Event.getTo(): LocalDateTime = if(isAllDay()) {
-    LocalDate.parse(end.date.toStringRfc3339(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59)
+    LocalDate.parse(end.date.toStringRfc3339(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59, 59)
 } else {
     LocalDateTime.parse(end.dateTime.toStringRfc3339(), DateTimeFormatter.ISO_DATE_TIME)
 }
