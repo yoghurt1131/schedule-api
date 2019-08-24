@@ -9,6 +9,7 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
 import dev.yoghurt1131.calendarapi.application.interceptor.GoogleOAuth2Interceptor
+import dev.yoghurt1131.calendarapi.service.GoogleOAuth2Service
 import dev.yoghurt1131.personallib.auth.HeaderAuthInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -74,13 +75,14 @@ class CalendarConfig(private val properties: CalendarProperties) {
 class CalendarWebMvcConfigure(
         private val googleClientSecrets: GoogleClientSecrets,
         private val googleCredential: GoogleCredential,
-        private val headerCheckProperties: HeaderCheckProperties
+        private val headerCheckProperties: HeaderCheckProperties,
+        private val googleOauth2Service : GoogleOAuth2Service
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         val content = System.getenv("HEADER_CONTENT")
         registry.addInterceptor(HeaderAuthInterceptor(headerCheckProperties.content))
-        registry.addInterceptor(GoogleOAuth2Interceptor(googleClientSecrets, googleCredential))
+        registry.addInterceptor(GoogleOAuth2Interceptor(googleClientSecrets, googleCredential, googleOauth2Service))
                 .addPathPatterns("/schedule/**")
     }
 }

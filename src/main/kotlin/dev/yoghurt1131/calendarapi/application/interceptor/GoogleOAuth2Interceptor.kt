@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.services.calendar.CalendarScopes
 import dev.yoghurt1131.calendarapi.GoogleOAuth2
+import dev.yoghurt1131.calendarapi.service.GoogleOAuth2Service
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.method.HandlerMethod
@@ -17,7 +18,8 @@ import javax.servlet.http.HttpServletResponse
 
 class GoogleOAuth2Interceptor(
         private val googleClientSecrets: GoogleClientSecrets,
-        private val googleCredential: GoogleCredential
+        private val googleCredential: GoogleCredential,
+        private val googleOAuth2Service: GoogleOAuth2Service
 ) : HandlerInterceptor {
 
     private val SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY)
@@ -29,14 +31,10 @@ class GoogleOAuth2Interceptor(
         val annotation = handerMethod.getMethodAnnotation(GoogleOAuth2::class.java)
         annotation?.let {
             logger.info("Check Google OAuth2....")
-            if(googleCredential.accessToken.isNullOrBlank()) {
+            if(!googleOAuth2Service.existAccessToken()) {
                 logger.info("No accessToken. Redirect Google Authentication Server")
-                val requestUrl = AuthorizationCodeRequestUrl(googleClientSecrets.details.authUri, googleClientSecrets.details.clientId)
-                        .setRedirectUri(googleClientSecrets.details.redirectUris.first())
-                        .setScopes(SCOPES)
-                        .build()
+                val requestUrl = googleOAuth2Service.buildRequestUrl(SCOPES)
                  response.sendRedirect(requestUrl)
-                return false
             }
             logger.info("AccessToken has found. Continue.")
         }
