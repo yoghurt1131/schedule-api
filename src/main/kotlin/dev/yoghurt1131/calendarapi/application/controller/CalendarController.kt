@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import dev.yoghurt1131.calendarapi.GoogleOAuth2
 import dev.yoghurt1131.calendarapi.service.CalendarService
 import dev.yoghurt1131.calendarapi.service.Schedule
+import dev.yoghurt1131.personallib.auth.HumbleAuth
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -20,6 +21,7 @@ class CalendarController(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @GetMapping("/schedule/daily")
+    @HumbleAuth
     @GoogleOAuth2
     fun todaySchedule(): Schedule {
         val schedule = calendarService.getSchedule(1L)
@@ -27,6 +29,7 @@ class CalendarController(
     }
 
     @GetMapping("/schedule/weekly")
+    @HumbleAuth
     @GoogleOAuth2
     fun weeklySchedule(): Schedule {
         val schedule = calendarService.getSchedule(7L)

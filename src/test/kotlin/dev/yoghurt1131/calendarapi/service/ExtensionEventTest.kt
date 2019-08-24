@@ -1,19 +1,19 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.service
 
 import com.google.api.client.util.DateTime
 import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.EventDateTime
-import dev.yoghurt1131.calendarapi.application.getFrom
-import dev.yoghurt1131.calendarapi.application.getTo
-import dev.yoghurt1131.calendarapi.application.getUser
-import dev.yoghurt1131.calendarapi.application.isAllDay
+import getFrom
+import getTo
+import getUser
+import isAllDay
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 
-class CalendarServiceTest {
+class ExtensionEventTest {
 
     @Test
     fun `When Event is dateOnly then return true`() {
