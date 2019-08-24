@@ -7,7 +7,6 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 @EnableConfigurationProperties(CalendarProperties::class, HeaderCheckProperties::class)
 class CalendarApiApplication
-
 fun main(args: Array<String>) {
 	runApplication<CalendarApiApplication>(*args)
 }

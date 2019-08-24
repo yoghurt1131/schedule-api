@@ -1,4 +1,4 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.application.interceptor
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import javax.servlet.ServletException
 
 @RestControllerAdvice
 class RequestErrorHandler: ResponseEntityExceptionHandler() {

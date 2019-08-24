@@ -1,4 +1,4 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.service
 
 import java.time.LocalDateTime
 

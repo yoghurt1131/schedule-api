@@ -1,29 +1,20 @@
 package dev.yoghurt1131.calendarapi
 
-import com.google.api.client.auth.oauth2.AuthorizationCodeFlow
-import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.Details
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.api.client.util.Value
-import com.google.api.client.util.store.FileDataStoreFactory
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import dev.yoghurt1131.calendarapi.application.interceptor.GoogleOAuth2Interceptor
 import dev.yoghurt1131.personallib.auth.HeaderAuthInterceptor
-import org.apache.tomcat.util.http.parser.Authorization
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.io.ClassPathResource
-import org.springframework.core.io.ResourceLoader
-import org.springframework.web.context.annotation.RequestScope
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import java.io.File
-import java.io.InputStreamReader
 import java.util.*
 
 

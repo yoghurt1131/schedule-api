@@ -1,4 +1,4 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.application.controller
 
 import org.springframework.boot.web.servlet.error.ErrorController
 import org.springframework.web.bind.annotation.RequestMapping

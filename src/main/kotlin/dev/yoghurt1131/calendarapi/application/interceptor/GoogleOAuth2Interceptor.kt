@@ -1,9 +1,10 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.application.interceptor
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
 import com.google.api.services.calendar.CalendarScopes
+import dev.yoghurt1131.calendarapi.GoogleOAuth2
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.web.method.HandlerMethod

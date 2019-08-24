@@ -1,10 +1,11 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.application.controller
 
-import com.google.api.client.auth.oauth2.AuthorizationCodeFlow
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
-import org.slf4j.Logger
+import dev.yoghurt1131.calendarapi.GoogleOAuth2
+import dev.yoghurt1131.calendarapi.service.CalendarService
+import dev.yoghurt1131.calendarapi.service.Schedule
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -19,13 +20,15 @@ class CalendarController(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @GetMapping("/schedule/daily")
-    @GoogleOAuth2 fun todaySchedule(): Schedule {
+    @GoogleOAuth2
+    fun todaySchedule(): Schedule {
         val schedule = calendarService.getSchedule(1L)
         return schedule
     }
 
     @GetMapping("/schedule/weekly")
-    @GoogleOAuth2 fun weeklySchedule(): Schedule {
+    @GoogleOAuth2
+    fun weeklySchedule(): Schedule {
         val schedule = calendarService.getSchedule(7L)
         return schedule
     }

@@ -1,4 +1,4 @@
-package dev.yoghurt1131.calendarapi
+package dev.yoghurt1131.calendarapi.application.controller
 
 import dev.yoghurt1131.personallib.auth.HumbleAuth
 import org.springframework.web.bind.annotation.GetMapping
