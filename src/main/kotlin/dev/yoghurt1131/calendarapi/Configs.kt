@@ -90,7 +90,7 @@ class CalendarWebMvcConfigure(
         val content = System.getenv("HEADER_CONTENT")
         registry.addInterceptor(HeaderAuthInterceptor(headerCheckProperties.content))
         registry.addInterceptor(GoogleOAuth2Interceptor(googleClientSecrets, googleCredential))
-                .addPathPatterns("/schedule")
+                .addPathPatterns("/schedule/**")
     }
 }
 
